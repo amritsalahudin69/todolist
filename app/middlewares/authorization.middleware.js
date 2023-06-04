@@ -1,6 +1,5 @@
-const ErrorResponse = require("../helpers/error.helper")
-const Response = require("../helpers/response.helper")
-const jwt = require('jsonwebtoken')
+const {Error} = require ('../helpers');
+const {jwt} = require ('jsonwebtoken');
 
 require('dotenv').config();
 const JWT_Key = process.env.JWT_Key;
@@ -15,7 +14,7 @@ const auth = (req, res, next)=>{
         req.user = token
         next();
     }else{
-        return new ErrorResponse(422, 'token invalid');
+        return new Error(422, 'token invalid');
     };
     
 }

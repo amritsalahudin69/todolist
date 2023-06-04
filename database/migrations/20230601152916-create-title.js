@@ -2,37 +2,31 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+  async up (queryInterface, Sequelize) {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+    await queryInterface.createTable('sys_title', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      useremail: {
-        type: Sequelize.STRING
-        },
-      username: {
+      title: {
         type: Sequelize.STRING
       },
-      userpass: {
-        type: Sequelize.STRING
-      },
-      id_status: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull : true,
         references : {
-          model : "userstatuses",
+          model : "sys_users",
           key : "id",
-          as : "id_status"
+          as : "user_id"
         }
-      },
-      avail_: {
-        type: Sequelize.INTEGER
-      },
-      desc_: {
-        type: Sequelize.STRING
       },
       created_at: {
         type: Sequelize.DATE,
@@ -47,7 +41,14 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('sys_users');
+
+  async down (queryInterface, Sequelize) {
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('users');
+     */
+    await queryInterface.dropTable('sys_title');
   }
 };
