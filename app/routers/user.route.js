@@ -1,19 +1,19 @@
-import {routerSatu} from 'express';
-import {UserModels} from '../../database/models';
+const {router} = require ( 'express').Router();
+const {UserModels} = require ( '../../database/models');
 
-import {UserRepo} from '../repositories'
-import {UserServices, AuthSevice} from '../services'
-import {AuthCont} from '../controllers'
-
-const router = routerSatu().Router();
+const {UserRepo} = require ( '../repositories');
+const {UserServices, AuthSevice} = require ( '../services');
+const {AuthCont} = require ( '../controllers');
+const {validate} = require ('../middlewares');
 
 const userRepo = new UserRepo(UserModels);
 const userServices = new UserServices(userRepo);
 const authService = new AuthSevice(userRepo);
 const authCont = new AuthCont(userServices, authService)
 
+const validation = new validate();
 
-router.post('/register', userCon.daftar);
-router.post('/login', userCon.masuk);
+router.post('/register', validation.validate, authCont.register.bind(authCont));
+// router.post('/login', userCon.masuk);
 
 module.exports =router
